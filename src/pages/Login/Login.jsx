@@ -32,16 +32,15 @@ const Login = () => {
     const onSubmit = async (data) => {
         const { email, password } = data;
         try {
-            signInUser(email, password);
+            await signInUser(email, password);
             setError(null);
-            navigate(from);
-            reset();
             Toast.fire({
                 icon: "success",
                 title: "Signed in successfully"
             });
-        }
-        catch (error) {
+            navigate(from);
+            reset();
+        } catch (error) {
             console.error(error);
             setError("Invalid email or password. Please try again!");
         }
@@ -50,12 +49,12 @@ const Login = () => {
     const handleSocialLogin = async (socialProvider) => {
         try {
             await socialProvider();
-            navigate(from);
-            reset();
             Toast.fire({
                 icon: "success",
                 title: "Signed in successfully"
             });
+            navigate(from);
+            reset();
         } catch (error) {
             console.error(error);
             setError("Failed to sign in with Google. Please try again later.");

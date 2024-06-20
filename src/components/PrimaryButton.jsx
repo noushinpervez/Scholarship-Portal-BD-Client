@@ -7,7 +7,7 @@ const PrimaryButton = ({ children, className = "", ...props }) => {
 };
 
 PrimaryButton.propTypes = {
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     className: PropTypes.string,
 };
 

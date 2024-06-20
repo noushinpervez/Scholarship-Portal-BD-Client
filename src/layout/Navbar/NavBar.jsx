@@ -3,6 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import { Link, NavLink } from "react-router-dom";
 import PrimaryButton from "../../components/PrimaryButton";
 import ThemeToggle from "../../components/ThemeToggle";
+import SecondaryButton from "../../components/SecondaryButton";
 
 const NavBar = () => {
     const [open, setOpen] = useState(false);
@@ -68,7 +69,7 @@ const NavBar = () => {
 
                     {/* Login or Logout Button */ }
                     {
-                        user ? <div onClick={ handleLogout } className="mt-4 md:mt-0 md:ml-4"><PrimaryButton className="bg-primary-100 hover:bg-primary-400 text-primary-900 border border-primary-400">Logout</PrimaryButton></div> : <Link to="/login" className="mt-4 md:mt-0 md:ml-4">
+                        user ? <div onClick={ handleLogout } className="mt-4 md:mt-0 md:ml-4"><SecondaryButton>Logout</SecondaryButton></div> : <Link to="/login" className="mt-4 md:mt-0 md:ml-4">
                             <PrimaryButton>Login</PrimaryButton>
                         </Link>
                     }

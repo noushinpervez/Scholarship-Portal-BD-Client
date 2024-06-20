@@ -34,10 +34,11 @@ const FirebaseProvider = ({ children }) => {
         return signOut(auth);
     };
 
-    const updateUserProfile = (name, image) => {
+    const updateUserProfile = async (name, image) => {
         const currentUser = auth.currentUser;
-        const photoURL = image || "./logo.png";
-        return updateProfile(currentUser, { displayName: name, photoURL: photoURL })
+        const photoURL = image || "https://w7.pngwing.com/pngs/129/292/png-transparent-female-avatar-girl-face-woman-user-flat-classy-users-icon.png";
+        await updateProfile(currentUser, { displayName: name, photoURL: photoURL });
+        setUser({ ...currentUser, displayName: name, photoURL: photoURL });
     };
 
     useEffect(() => {

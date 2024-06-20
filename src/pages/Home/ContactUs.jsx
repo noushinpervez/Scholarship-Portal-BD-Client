@@ -2,7 +2,7 @@ import PrimaryButton from "../../components/PrimaryButton";
 
 const ContactUs = () => {
     return (
-        <section className="container my-12 mx-auto px-2 md:px-4">
+        <section className="container my-16 mx-auto px-2 md:px-4">
             <div className="flex justify-center">
                 <div className="text-center md:max-w-xl lg:max-w-3xl">
                     <h2 className="mb-12 px-6 text-3xl font-bold text-accent-600">Contact us</h2>

@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const AuthButton = ({ text }) => {
     return (
         <button type="submit" className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-white capitalize transition-colors duration-500 transform bg-primary-500 rounded hover:bg-primary-400 focus:ring focus:ring-primary-500 dark:focus:ring-primary-600">
@@ -7,6 +9,10 @@ const AuthButton = ({ text }) => {
             </svg>
         </button>
     );
+};
+
+AuthButton.propTypes = {
+    text: PropTypes.string,
 };
 
 export default AuthButton;

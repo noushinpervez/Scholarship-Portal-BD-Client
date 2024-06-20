@@ -20,7 +20,7 @@ const Footer = () => {
 
                     {/* Contacts */ }
                     <div className="space-y-2 text-sm">
-                        <p className="text-base font-bold tracking-wide">Contacts</p>
+                        <h3 className="text-base font-bold tracking-wide">Contacts</h3>
                         {/* Phone */ }
                         <div className="flex">
                             <p className="mr-1 text-gray-500">Phone:</p>
@@ -42,7 +42,7 @@ const Footer = () => {
 
                     {/* Social */ }
                     <div className="text-gray-500 text-sm">
-                        <span className="text-base text-text-950 font-bold tracking-wide">Social</span>
+                        <h3 className="text-base text-text-950 font-bold tracking-wide">Social</h3>
                         <div className="flex items-center mt-1 space-x-3">
                             {/* Twitter */ }
                             <a href="/" className="transition-colors duration-300 hover:text-primary-400">

@@ -127,6 +127,8 @@
         --accent-800: #bbc1dd;
         --accent-900: #dde0ee;
         --accent-950: #eeeff6;
+
+        --bg: #000000;
     }
 }
 
@@ -140,7 +142,12 @@ body {
     font-family: "Proza Libre", sans-serif;
 }
 
-h1, h2 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: "Raleway", serif;
 }
 
