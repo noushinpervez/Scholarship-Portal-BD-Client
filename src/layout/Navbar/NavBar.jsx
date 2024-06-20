@@ -28,7 +28,7 @@ const NavBar = () => {
                 <div className="flex flex-row items-center justify-between p-4 flex-grow">
                     {/* Logo and Title */ }
                     <Link to="/" className="text-lg font-medium tracking-widest uppercase rounded-lg focus:outline-none focus:shadow-outline flex items-center gap-2">
-                        <img className="w-12 lg:w-16" src="./logo.png" />
+                        <img className="w-12 lg:w-16" src="/logo.png" alt="Logo" />
                         <p className="hidden lg:block text-primary-800"><span className="font-extrabold">Scholarship</span> Portal</p></Link>
 
                     <div className="flex gap-3 lg:gap-6">

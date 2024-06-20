@@ -9,7 +9,7 @@ const Footer = () => {
                     {/* Logo, Title and About */ }
                     <div className="sm:col-span-2">
                         <Link href="/" aria-label="Go home" title="Scholapship Portal" className="inline-flex items-center">
-                            <img className="w-12 lg:w-16" src="./logo.png" alt="Logo" />
+                            <img className="w-12 lg:w-16" src="/logo.png" alt="Logo" />
                             <p className="ml-2 text-xl tracking-wide text-primary-800 uppercase font-medium"><span className="font-extrabold">Scholarship</span> Portal</p>
                         </Link>
                         <div className="mt-6 lg:max-w-sm text-sm text-gray-500">

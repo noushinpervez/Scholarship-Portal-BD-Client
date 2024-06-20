@@ -7,6 +7,7 @@ import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoute";
+import ScholarshipDetails from "../pages/ScholarshipDetails/ScholarshipDetails";
 
 export const router = createBrowserRouter([
     {
@@ -25,10 +26,9 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/dashboard",
-                element:
-                    <PrivateRoute>
-                        <Dashboard />
-                    </PrivateRoute>,
+                element: <PrivateRoute>
+                    <Dashboard />
+                </PrivateRoute>,
             },
             {
                 path: "/login",
@@ -37,6 +37,12 @@ export const router = createBrowserRouter([
             {
                 path: "/signup",
                 element: <SignUp></SignUp>,
+            },
+            {
+                path: "/scholarships/:id",
+                element: <PrivateRoute>
+                    <ScholarshipDetails />
+                </PrivateRoute>,
             },
         ],
     },

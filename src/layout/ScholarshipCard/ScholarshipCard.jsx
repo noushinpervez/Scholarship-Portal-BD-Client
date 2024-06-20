@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const ScholarshipCard = ({ scholarship }) => {
-    const { university_name, university_logo, scholarship_category, university_location, application_deadline, subject_name, application_fees } = scholarship;
+    const { _id, university_name, university_logo, scholarship_category, university_location, application_deadline, subject_name, application_fees } = scholarship;
 
     return (
         <div className="w-full max-w-4xl flex flex-row gap-1 sm:items-center justify-between px-5 py-4 rounded border-b-4 border-accent-400 bg-gradient-to-tl from-accent-50 to-accent-200">
@@ -55,12 +56,14 @@ const ScholarshipCard = ({ scholarship }) => {
                 </div>
 
                 {/* Scholarship details */ }
-                <button className="mt-5 bg-primary-800 text-text-50 font-medium px-4 py-2 rounded flex gap-1 items-center">
-                    Scholarship Details
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
-                </button>
+                <Link to={ `/scholarships/${_id}` }>
+                    <button className="mt-5 bg-primary-800 text-text-50 font-medium px-4 py-2 rounded flex gap-1 items-center">
+                        Scholarship Details
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </button>
+                </Link>
             </div>
 
             {/* University logo */ }

@@ -1,32 +1,17 @@
-import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import ScholarshipCard from "../../layout/ScholarshipCard/ScholarshipCard";
 import { Link } from "react-router-dom";
+import useScholarshipData from "../../hooks/useScholarshipData";
 
 const TopScholarship = () => {
-    const [scholarships, setScholarships] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        fetch("http://localhost:5000/top-scholarships")
-            .then(res => res.json())
-            .then(data => {
-                setScholarships(data);
-                setLoading(false);
-            })
-            .catch(error => {
-                setError(error.message);
-                setLoading(false);
-            });
-    }, []);
+    const [scholarships, loading, error] = useScholarshipData();
 
     if (loading) {
         return <Loading></Loading>;
     }
 
     if (error) {
-        return <div>Error: { error }</div>;
+        return <div className="text-red-400 text-2xl font-semibold min-h-[49vh] flex items-center justify-center">Error: { error }</div>;
     }
 
     return (
