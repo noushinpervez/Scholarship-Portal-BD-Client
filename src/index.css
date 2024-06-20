@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Proza+Libre:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --text-50: #eaf0fa;
+        --text-100: #d6e1f5;
+        --text-200: #adc4eb;
+        --text-300: #84a6e1;
+        --text-400: #5b88d7;
+        --text-500: #326bcd;
+        --text-600: #2855a4;
+        --text-700: #1e407b;
+        --text-800: #142b52;
+        --text-900: #0a1529;
+        --text-950: #050b15;
+
+        --background-50: #ebf0fa;
+        --background-100: #d6e0f5;
+        --background-200: #adc2eb;
+        --background-300: #85a3e0;
+        --background-400: #5c85d6;
+        --background-500: #3366cc;
+        --background-600: #2952a3;
+        --background-700: #1f3d7a;
+        --background-800: #142952;
+        --background-900: #0a1429;
+        --background-950: #050a14;
+
+        --primary-50: #e9f0fb;
+        --primary-100: #d3e1f8;
+        --primary-200: #a8c2f0;
+        --primary-300: #7ca4e9;
+        --primary-400: #5186e1;
+        --primary-500: #2567da;
+        --primary-600: #1e53ae;
+        --primary-700: #163e83;
+        --primary-800: #0f2957;
+        --primary-900: #07152c;
+        --primary-950: #040a16;
+
+        --secondary-50: #e7f9fd;
+        --secondary-100: #cff4fc;
+        --secondary-200: #9fe8f9;
+        --secondary-300: #6fddf6;
+        --secondary-400: #3fd2f3;
+        --secondary-500: #0fc7f0;
+        --secondary-600: #0c9fc0;
+        --secondary-700: #097790;
+        --secondary-800: #064f60;
+        --secondary-900: #032830;
+        --secondary-950: #021418;
+
+        --accent-50: #eeeff6;
+        --accent-100: #dde0ee;
+        --accent-200: #bbc1dd;
+        --accent-300: #99a2cc;
+        --accent-400: #7783bb;
+        --accent-500: #5563aa;
+        --accent-600: #445088;
+        --accent-700: #333c66;
+        --accent-800: #222844;
+        --accent-900: #111422;
+        --accent-950: #090a11;
+    }
+
+    .dark {
+        --text-50: #050b15;
+        --text-100: #0a1529;
+        --text-200: #142b52;
+        --text-300: #1e407b;
+        --text-400: #2855a4;
+        --text-500: #326bcd;
+        --text-600: #5b88d7;
+        --text-700: #84a6e1;
+        --text-800: #adc4eb;
+        --text-900: #d6e1f5;
+        --text-950: #eaf0fa;
+
+        --background-50: #050a14;
+        --background-100: #0a1429;
+        --background-200: #142952;
+        --background-300: #1f3d7a;
+        --background-400: #2952a3;
+        --background-500: #3366cc;
+        --background-600: #5c85d6;
+        --background-700: #85a3e0;
+        --background-800: #adc2eb;
+        --background-900: #d6e0f5;
+        --background-950: #ebf0fa;
+
+        --primary-50: #040a16;
+        --primary-100: #07152c;
+        --primary-200: #0f2957;
+        --primary-300: #163e83;
+        --primary-400: #1e53ae;
+        --primary-500: #2567da;
+        --primary-600: #5186e1;
+        --primary-700: #7ca4e9;
+        --primary-800: #a8c2f0;
+        --primary-900: #d3e1f8;
+        --primary-950: #e9f0fb;
+
+        --secondary-50: #021418;
+        --secondary-100: #032830;
+        --secondary-200: #064f60;
+        --secondary-300: #097790;
+        --secondary-400: #0c9fc0;
+        --secondary-500: #0fc7f0;
+        --secondary-600: #3fd2f3;
+        --secondary-700: #6fddf6;
+        --secondary-800: #9fe8f9;
+        --secondary-900: #cff4fc;
+        --secondary-950: #e7f9fd;
+
+        --accent-50: #090a11;
+        --accent-100: #111422;
+        --accent-200: #222844;
+        --accent-300: #333c66;
+        --accent-400: #445088;
+        --accent-500: #5563aa;
+        --accent-600: #7783bb;
+        --accent-700: #99a2cc;
+        --accent-800: #bbc1dd;
+        --accent-900: #dde0ee;
+        --accent-950: #eeeff6;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    color: var(--text-950);
+    background-color: var(--background-50);
+    font-family: "Proza Libre", sans-serif;
+}
+
+h1, h2 {
+    font-family: "Raleway", serif;
+}
+
+footer {
+    clip-path: polygon(0 0, 100% 13%, 100% 100%, 0% 100%);
+    background-color: var(--accent-100);
+}
+
+@media (max-width: 768px) {
+    footer {
+        clip-path: polygon(0 0, 100% 5%, 100% 100%, 0% 100%);
+    }
+}
