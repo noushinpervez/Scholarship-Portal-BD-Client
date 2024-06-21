@@ -8,7 +8,9 @@ import SignUp from "../pages/SignUp/SignUp";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import ScholarshipDetails from "../pages/ScholarshipDetails/ScholarshipDetails";
-import MyProfile from "../pages/MyProfile/MyProfile";
+import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
+import Payment from "../pages/Payment/Payment";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
 
 export const router = createBrowserRouter([
     {
@@ -39,6 +41,10 @@ export const router = createBrowserRouter([
                     <ScholarshipDetails />
                 </PrivateRoute>,
             },
+            {
+                path: "scholarships/:id/payment",
+                element: <Payment></Payment>,
+            },
         ],
     },
     {
@@ -50,6 +56,12 @@ export const router = createBrowserRouter([
             {
                 path: "profile",
                 element: <MyProfile></MyProfile>,
+            },
+
+            // Admin routes 
+            {
+                path: "manage-users",
+                element: <ManageUsers></ManageUsers>,
             },
         ],
     },

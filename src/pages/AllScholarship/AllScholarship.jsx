@@ -3,6 +3,7 @@ import ScholarshipCard from "../../layout/ScholarshipCard/ScholarshipCard";
 import Loading from "../../components/Loading";
 import useScholarshipData from "../../hooks/useScholarshipData";
 import { useEffect, useState } from "react";
+import Title from "../../components/Title";
 
 const AllScholarship = () => {
     const [scholarships, loading, error] = useScholarshipData();
@@ -43,7 +44,7 @@ const AllScholarship = () => {
             </Helmet>
 
             <section className="container my-16 mx-auto px-2 md:px-4">
-                <h2 className="text-center mb-12 px-6 text-3xl font-bold text-accent-600">All Scholarship</h2>
+                <Title title="All Scholarship" />
 
                 {/* Search */}
                 <form onSubmit={ handleSubmit } className="mb-10 mx-auto max-w-xl py-2 px-6 rounded bg-primary-100 focus-within:border flex focus-within:border-primary-300">
