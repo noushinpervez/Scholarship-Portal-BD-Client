@@ -1,10 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { NavLink, Outlet } from "react-router-dom";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAuth from "../../hooks/useAuth";
+import Loading from "../../components/Loading";
 
 const Dashboard = () => {
     const [open, setOpen] = useState(false);
-    const role = "admin"; // Change this role as per your authentication logic
+    const axiosPublic = useAxiosPublic();
+    const [role, setRole] = useState("");
+    const [loading, setLoading] = useState(true);
+    const { user } = useAuth();
+
+    useEffect(() => {
+        const fetchUserRole = async () => {
+            setLoading(true)
+            try {
+                const response = await axiosPublic.get(`/user-role/${user.email}`);
+                setRole(response.data.role);
+            } catch (error) {
+                console.error("Error fetching user role:", error);
+            }
+            setLoading(false);
+        };
+
+        if (user) {
+            fetchUserRole();
+        }
+    }, [user, axiosPublic]);
+
+    if (loading) {
+        return <Loading></Loading>;
+    }
 
     const activeLinkStyle = {
         transition: "all 0.3s ease-in-out",
@@ -28,15 +55,15 @@ const Dashboard = () => {
         navigationLinks = [
             { to: "/dashboard/profile", label: "My Profile" },
             { to: "/dashboard/manage-scholarships", label: "Manage Scholarships" },
-            { to: "/dashboard/reviews", label: "All Reviews" },
+            { to: "/dashboard/manage-reviews", label: "All Reviews" },
             { to: "/dashboard/manage-applied-applications", label: "All Applied Scholarships" },
         ];
     } else {
         // Default role (user)
         navigationLinks = [
             { to: "/dashboard/profile", label: "My Profile" },
-            { to: "/dashboard/application", label: "My Application" },
-            { to: "/dashboard/reviews", label: "My Reviews" },
+            { to: "/dashboard/manage-applications", label: "My Application" },
+            { to: "/dashboard/manage-reviews", label: "My Reviews" },
         ];
     }
 
@@ -46,12 +73,12 @@ const Dashboard = () => {
                 <title>Scholarship Portal | Dashboard</title>
             </Helmet>
 
-            <div className="md:flex flex-col md:flex-row md:min-h-screen w-full">
-                <div className="flex flex-col w-full md:w-64 bg-accent-600 flex-shrink-0">
+            <div className="lg:flex flex-col lg:flex-row lg:min-h-screen w-full">
+                <div className="flex flex-col w-full lg:w-64 bg-accent-600 flex-shrink-0">
                     <div className="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
                         <p className="text-lg font-semibold tracking-widest text-text-100 uppercase rounded-lg focus:outline-none focus:shadow-outline">Dashboard</p>
-                        <button className="rounded-lg md:hidden focus:outline-none focus:shadow-outline" onClick={ () => setOpen(!open) }>
-                            <svg fill="currentColor" viewBox="0 0 20 20" className="w-6 h-6">
+                        <button className="rounded-lg lg:hidden focus:outline-none focus:shadow-outline" onClick={ () => setOpen(!open) }>
+                            <svg fill="currentColor" viewBox="0 0 20 20" className="w-6 h-6 text-text-100">
                                 { open ? (
                                     <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
                                 ) : (
@@ -62,7 +89,7 @@ const Dashboard = () => {
                     </div>
 
                     {/* Sidebar */ }
-                    <nav className={ `flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto ${open ? "block" : "hidden"}` }>
+                    <nav className={ `flex-grow lg:block px-4 pb-4 lg:pb-0 ${open ? "block" : "hidden"}` }>
                         { navigationLinks.map((link, index) => (
                             <NavLink
                                 key={ index }

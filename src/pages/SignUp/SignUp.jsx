@@ -40,6 +40,7 @@ const SignUp = () => {
             const userInfo = {
                 name: fullName,
                 email: email,
+                role: "user"
             };
 
             const res = await axiosPublic.post("/users", userInfo);
@@ -58,7 +59,8 @@ const SignUp = () => {
         } catch (error) {
             if (error.code === "auth/email-already-in-use") {
                 setError("Email is already in use. Please use a different email.");
-            } else {
+            }
+            else {
                 console.error(error);
                 setError("Failed to sign up. Please try again later.");
             }

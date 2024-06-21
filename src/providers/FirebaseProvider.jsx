@@ -6,10 +6,9 @@ import PropTypes from 'prop-types';
 export const AuthContext = createContext(null);
 
 const FirebaseProvider = ({ children }) => {
-    const googleProvider = new GoogleAuthProvider();
-    
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const googleProvider = new GoogleAuthProvider();
 
     const createUser = (email, password) => {
         setLoading(true);

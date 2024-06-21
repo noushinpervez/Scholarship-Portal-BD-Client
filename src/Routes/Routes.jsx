@@ -11,29 +11,33 @@ import ScholarshipDetails from "../pages/ScholarshipDetails/ScholarshipDetails";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import Payment from "../pages/Payment/Payment";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers/ManageUsers";
+import AddScholarship from "../pages/Dashboard/Admin/AddScholarship/AddScholarship";
+import ManageScholarships from "../pages/Dashboard/Admin/ManageScholarships/ManageScholarships";
+import ManageApplications from "../pages/Dashboard/Admin/ManageApplications/ManageApplications";
+import ManageReviews from "../pages/Dashboard/Admin/ManageReviews/ManageReviews";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Root></Root>,
-        errorElement: <ErrorPage></ErrorPage>,
+        element: <Root />,
+        errorElement: <ErrorPage />,
 
         children: [
             {
                 path: "/",
-                element: <Home></Home>,
+                element: <Home />,
             },
             {
                 path: "all-scholarship",
-                element: <AllScholarship></AllScholarship>,
+                element: <AllScholarship />,
             },
             {
                 path: "login",
-                element: <Login></Login>,
+                element: <Login />,
             },
             {
                 path: "signup",
-                element: <SignUp></SignUp>,
+                element: <SignUp />,
             },
             {
                 path: "scholarships/:id",
@@ -43,10 +47,12 @@ export const router = createBrowserRouter([
             },
             {
                 path: "scholarships/:id/payment",
-                element: <Payment></Payment>,
+                element: <Payment />,
             },
         ],
     },
+
+    // Dashboard routes
     {
         path: "dashboard",
         element: <PrivateRoute>
@@ -55,13 +61,43 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "profile",
-                element: <MyProfile></MyProfile>,
+                element: <MyProfile />,
+            },
+            {
+                path: "manage-reviews",
+                element: <ManageReviews />,
+            },
+            {
+                path: "manage-applied-scholarships",
+                element: <ManageApplications />,
             },
 
             // Admin routes 
             {
+                path: "add-scholarship",
+                element: <PrivateRoute allowedRoles={ ["admin"] }>
+                    <AddScholarship />
+                </PrivateRoute>,
+            },
+            {
                 path: "manage-users",
-                element: <ManageUsers></ManageUsers>,
+                element: <PrivateRoute allowedRoles={ ["admin"] }>
+                    <ManageUsers />
+                </PrivateRoute>,
+            },
+            {
+                path: "manage-reviews",
+                element: <PrivateRoute allowedRoles={ ["admin"] }>
+                    <ManageReviews />
+                </PrivateRoute>,
+            },
+
+            // Moderator routes
+            {
+                path: "manage-scholarships",
+                element: <PrivateRoute allowedRoles={ ["admin", "moderator"] }>
+                    <ManageScholarships />
+                </PrivateRoute>,
             },
         ],
     },
