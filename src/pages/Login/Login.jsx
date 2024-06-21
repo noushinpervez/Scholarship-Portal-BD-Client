@@ -5,11 +5,13 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import AuthButton from "../../components/AuthButton";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Login = () => {
     const { signInUser, googleLogin } = useAuth();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const [error, setError] = useState(null);
+    const axiosPublic = useAxiosPublic();
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -48,13 +50,26 @@ const Login = () => {
 
     const handleSocialLogin = async (socialProvider) => {
         try {
-            await socialProvider();
-            Toast.fire({
-                icon: "success",
-                title: "Signed in successfully"
-            });
-            navigate(from);
-            reset();
+            const result = await socialProvider();
+
+            const userInfo = {
+                name: result.user?.displayName,
+                email: result.user?.email
+            };
+
+            const res = await axiosPublic.post("/users", userInfo);
+
+            if (res.data) {
+                Toast.fire({
+                    icon: "success",
+                    title: "Signed in successfully"
+                });
+                navigate(from);
+                reset();
+            }
+            else {
+                setError("Failed to sign in. Please try again later.");
+            }
         } catch (error) {
             console.error(error);
             setError("Failed to sign in with Google. Please try again later.");

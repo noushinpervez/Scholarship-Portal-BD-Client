@@ -3,25 +3,29 @@ import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
 import AuthButton from "../../components/AuthButton";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const ScholarshipDetails = () => {
     const [scholarships, setScholarships] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { id } = useParams();
+    const axiosPublic = useAxiosPublic();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/top-scholarships/${id}`)
-            .then(res => res.json())
-            .then(data => {
-                setScholarships(data);
+        const fetchScholarshipDetails = async () => {
+            try {
+                const response = await axiosPublic.get(`/top-scholarships/${id}`);
+                setScholarships(response.data);
                 setLoading(false);
-            })
-            .catch(error => {
+            } catch (error) {
                 setError(error.message);
                 setLoading(false);
-            });
-    }, [id]);
+            }
+        };
+
+        fetchScholarshipDetails();
+    }, [id, axiosPublic]);
 
     if (loading) {
         return <Loading></Loading>;

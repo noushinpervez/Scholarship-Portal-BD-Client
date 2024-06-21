@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
+import useAxiosPublic from "./useAxiosPublic";
 
 const useScholarshipData = () => {
     const [scholarships, setScholarships] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const axiosPublic = useAxiosPublic();
 
     useEffect(() => {
-        fetch("http://localhost:5000/top-scholarships")
-            .then(res => res.json())
-            .then(data => {
-                setScholarships(data);
+        const fetchScholarships = async () => {
+            try {
+                const response = await axiosPublic.get("/top-scholarships");
+                setScholarships(response.data);
                 setLoading(false);
-            })
-            .catch(error => {
+            } catch (error) {
                 setError(error.message);
                 setLoading(false);
-            });
-    }, []);
+            }
+        };
 
+        fetchScholarships();
+    }, [axiosPublic]);
+    
     return [scholarships, loading, error];
 };
 

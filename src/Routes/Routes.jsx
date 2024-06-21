@@ -8,6 +8,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import ScholarshipDetails from "../pages/ScholarshipDetails/ScholarshipDetails";
+import MyProfile from "../pages/MyProfile/MyProfile";
 
 export const router = createBrowserRouter([
     {
@@ -21,28 +22,34 @@ export const router = createBrowserRouter([
                 element: <Home></Home>,
             },
             {
-                path: "/all-scholarship",
+                path: "all-scholarship",
                 element: <AllScholarship></AllScholarship>,
             },
             {
-                path: "/dashboard",
-                element: <PrivateRoute>
-                    <Dashboard />
-                </PrivateRoute>,
-            },
-            {
-                path: "/login",
+                path: "login",
                 element: <Login></Login>,
             },
             {
-                path: "/signup",
+                path: "signup",
                 element: <SignUp></SignUp>,
             },
             {
-                path: "/scholarships/:id",
+                path: "scholarships/:id",
                 element: <PrivateRoute>
                     <ScholarshipDetails />
                 </PrivateRoute>,
+            },
+        ],
+    },
+    {
+        path: "dashboard",
+        element: <PrivateRoute>
+            <Dashboard />
+        </PrivateRoute>,
+        children: [
+            {
+                path: "profile",
+                element: <MyProfile></MyProfile>,
             },
         ],
     },

@@ -5,10 +5,12 @@ import { useForm } from "react-hook-form";
 import AuthButton from "../../components/AuthButton";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const SignUp = () => {
     const { createUser, updateUserProfile } = useAuth();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const axiosPublic = useAxiosPublic();
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
@@ -34,12 +36,25 @@ const SignUp = () => {
         try {
             await createUser(email, password);
             await updateUserProfile(fullName, photoURL);
-            navigate(from);
-            reset();
-            Toast.fire({
-                icon: "success",
-                title: "Signed up successfully"
-            });
+
+            const userInfo = {
+                name: fullName,
+                email: email,
+            };
+
+            const res = await axiosPublic.post("/users", userInfo);
+            
+            if (res.data.insertedId) {
+                reset();
+                navigate(from);
+                Toast.fire({
+                    icon: "success",
+                    title: "Signed up successfully"
+                });
+            }
+            else {
+                setError("Failed to sign up. Please try again later.");
+            }
         } catch (error) {
             if (error.code === "auth/email-already-in-use") {
                 setError("Email is already in use. Please use a different email.");

@@ -65,7 +65,7 @@ const NavBar = () => {
 
                     <NavLink to="/all-scholarship" className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded focus:text-primary-600 md:mt-0 md:ml-4 hover:text-primary-600 hover:bg-primary-100 focus:bg-primary-100 focus:outline-none focus:shadow-outline" style={ ({ isActive }) => (isActive ? activeLinkStyle : {}) }>All Scholarship</NavLink>
 
-                    <NavLink to="/dashboard" className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded focus:text-primary-600 md:mt-0 md:ml-4 hover:text-primary-600 hover:bg-primary-100 focus:bg-primary-100 focus:outline-none focus:shadow-outline" style={ ({ isActive }) => (isActive ? activeLinkStyle : {}) }>Dashboard</NavLink>
+                    <NavLink to="/dashboard/profile" className="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded focus:text-primary-600 md:mt-0 md:ml-4 hover:text-primary-600 hover:bg-primary-100 focus:bg-primary-100 focus:outline-none focus:shadow-outline" style={ ({ isActive }) => (isActive ? activeLinkStyle : {}) }>Dashboard</NavLink>
 
                     {/* Login or Logout Button */ }
                     {
