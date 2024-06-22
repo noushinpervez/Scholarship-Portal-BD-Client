@@ -37,6 +37,8 @@ const Payment = () => {
                                 universityName={ universityName }
                                 scholarshipCategory={ scholarshipCategory }
                                 subjectCategory={ subjectCategory }
+                                applicationFees={ applicationFees }
+                                serviceCharge={ serviceCharge }
                             />
                         </Elements>
                     </div>

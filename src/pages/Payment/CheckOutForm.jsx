@@ -7,7 +7,7 @@ import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import ScholarshipForm from "../ScholarshipForm/ScholarshipForm";
 
-const CheckOutForm = ({ totalAmount, universityName, scholarshipCategory, subjectCategory }) => {
+const CheckOutForm = ({ totalAmount, universityName, scholarshipCategory, subjectCategory, applicationFees, serviceCharge }) => {
     const [error, setError] = useState("");
     const [clientSecret, setClientSecret] = useState("");
     const [transactionId, setTransactionId] = useState("");
@@ -125,6 +125,8 @@ const CheckOutForm = ({ totalAmount, universityName, scholarshipCategory, subjec
                     universityName={ universityName }
                     scholarshipCategory={ scholarshipCategory }
                     subjectCategory={ subjectCategory }
+                    applicationFees={ applicationFees }
+                    serviceCharge={ serviceCharge }
                 />
             ) }
         </>
@@ -136,6 +138,8 @@ CheckOutForm.propTypes = {
     universityName: PropTypes.string,
     scholarshipCategory: PropTypes.string,
     subjectCategory: PropTypes.string,
+    applicationFees: PropTypes.number,
+    serviceCharge: PropTypes.number,
 };
 
 export default CheckOutForm;

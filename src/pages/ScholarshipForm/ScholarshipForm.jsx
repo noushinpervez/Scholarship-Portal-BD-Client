@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useHistory } from 'react-router-dom';
 import ScholarshipFormInput from "../../components/ScholarshipFormInput";
 import ScholarshipFormOptionInput from "../../components/ScholarshipFormOptionInput";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import { Navigate, useParams } from "react-router-dom";
 
-const ScholarshipForm = ({ universityName, scholarshipCategory, subjectCategory }) => {
+const ScholarshipForm = ({ universityName, scholarshipCategory, subjectCategory, applicationFees, serviceCharge }) => {
     const [formData, setFormData] = useState({
         phoneNumber: "",
         photo: "",
@@ -16,27 +16,72 @@ const ScholarshipForm = ({ universityName, scholarshipCategory, subjectCategory 
         applyingDegree: "",
         sscResult: "",
         hscResult: "",
-        studyGap: ""
+        studyGap: "",
     });
 
+    const [isSubmitted, setIsSubmitted] = useState(false);
     const axiosPublic = useAxiosPublic();
     const { user } = useAuth();
-    const history = useHistory();
+    const { id } = useParams();
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        background: "var(--accent-100)",
+        iconColor: "var(--primary-500)",
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
+    const ToastError = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        background: "var(--accent-100)",
+        iconColor: "#d33",
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevFormData => ({
             ...prevFormData,
             [name]: value,
-            userEmail: user.email
         }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axiosPublic.post("/applied-scholarships", formData);
-            console.log(response.data);
+            const todayDate = new Date().toISOString().split('T')[0];
+
+            const formDataExtra = {
+                ...formData,
+                universityName: universityName,
+                scholarshipCategory: scholarshipCategory,
+                subjectCategory: subjectCategory,
+                applicationFees: applicationFees,
+                serviceCharge: serviceCharge,
+                userName: user.displayName,
+                userEmail: user.email,
+                scholarshipId: id,
+                applicationDate: todayDate,
+                applicationStatus: "pending",
+            };
+
+            setIsSubmitted(true);
+            await axiosPublic.post("/applied-scholarships", formDataExtra);
+
             setFormData({
                 phoneNumber: "",
                 photo: "",
@@ -48,25 +93,23 @@ const ScholarshipForm = ({ universityName, scholarshipCategory, subjectCategory 
                 studyGap: ""
             });
 
-            Swal.fire({
-                title: "Applied for Scholarship!",
-                text: "Your scholarship application has been submitted successfully.",
+            Toast.fire({
                 icon: "success",
-                background: "var(--accent-100)",
-                color: "var(--text-primary)",
+                title: "Your scholarship application has been submitted successfully"
             });
 
-            history.push('/');
+            <Navigate to="/"></Navigate>
         } catch (error) {
-            Swal.fire({
-                title: "Error!",
-                text: "There was an error while submitting your application. Please try again later.",
+            ToastError.fire({
                 icon: "error",
-                confirmButtonColor: "#d33",
-                background: "var(--accent-100)",
+                title: "There was an error while submitting your application. Please try again later"
             });
         }
     };
+
+    if (isSubmitted) {
+        return <Navigate to="/" />;
+    }
 
     return (
         <form onSubmit={ handleSubmit }>
@@ -160,6 +203,8 @@ ScholarshipForm.propTypes = {
     universityName: PropTypes.string,
     scholarshipCategory: PropTypes.string,
     subjectCategory: PropTypes.string,
+    applicationFees: PropTypes.number,
+    serviceCharge: PropTypes.number,
 };
 
 export default ScholarshipForm;

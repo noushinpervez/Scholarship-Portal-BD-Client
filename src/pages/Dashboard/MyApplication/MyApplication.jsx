@@ -1,19 +1,21 @@
 import { Helmet } from "react-helmet-async";
-import Title from "../../../../components/Title";
+import Title from "../../../components/Title";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { MdOutlineCancel, MdOutlineFeedback } from "react-icons/md";
 import { CgDetailsMore } from "react-icons/cg";
+import useAuth from "../../../hooks/useAuth";
 
-const ManageApplications = () => {
+const MyApplication = () => {
     const axiosPublic = useAxiosPublic();
+    const { user } = useAuth();
 
     const { data: scholarshipApplications = [], refetch } = useQuery({
-        queryKey: ["scholarshipApplications"],
+        queryKey: ["scholarshipApplications", user.email],
         queryFn: async () => {
-            const res = await axiosPublic.get("/applications");
-            return res.data
+            const res = await axiosPublic.get(`/applications/${user.email}`);
+            return res.data;
         }
     });
 
@@ -47,10 +49,10 @@ const ManageApplications = () => {
     return (
         <>
             <Helmet>
-                <title>Dashboard | Manage Scholarship Applications</title>
+                <title>Dashboard | My Applications</title>
             </Helmet>
 
-            <Title title="Manage Scholarship Applications" />
+            <Title title="My Applications" />
 
             <div>
                 <div className="p-4 flex">
@@ -58,7 +60,7 @@ const ManageApplications = () => {
                 </div>
                 { scholarshipApplications.length === 0 ? (
                     <div className="p-4">
-                        <div className="text-red-400 text-2xl font-semibold flex items-center justify-center">No applications found.</div>
+                        <div className="text-red-400 text-2xl font-semibold flex items-center justify-center mt-16">No applications found.</div>
                     </div>
                 ) : (
                     <div className="px-3 py-4 flex overflow-scroll">
@@ -125,4 +127,4 @@ const ManageApplications = () => {
     );
 };
 
-export default ManageApplications;
+export default MyApplication;

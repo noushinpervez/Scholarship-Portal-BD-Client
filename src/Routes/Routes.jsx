@@ -15,6 +15,7 @@ import AddScholarship from "../pages/Dashboard/Admin/AddScholarship/AddScholarsh
 import ManageScholarships from "../pages/Dashboard/Admin/ManageScholarships/ManageScholarships";
 import ManageApplications from "../pages/Dashboard/Admin/ManageApplications/ManageApplications";
 import ManageReviews from "../pages/Dashboard/Admin/ManageReviews/ManageReviews";
+import MyApplication from "../pages/Dashboard/MyApplication/MyApplication";
 
 export const router = createBrowserRouter([
     {
@@ -46,7 +47,7 @@ export const router = createBrowserRouter([
                 </PrivateRoute>,
             },
             {
-                path: "scholarships/:id/payment",
+                path: "payment/:id",
                 element: <Payment />,
             },
         ],
@@ -68,8 +69,8 @@ export const router = createBrowserRouter([
                 element: <ManageReviews />,
             },
             {
-                path: "manage-applied-applications",
-                element: <ManageApplications />,
+                path: "applied-applications",
+                element: <MyApplication />,
             },
             {
                 path: "manage-reviews",
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
                 element: <PrivateRoute allowedRoles={ ["admin"] }>
                     <AddScholarship />
                 </PrivateRoute>,
+            },
+            {
+                path: "manage-applied-applications",
+                element: <ManageApplications />,
             },
             {
                 path: "manage-users",

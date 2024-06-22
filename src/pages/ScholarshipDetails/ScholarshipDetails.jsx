@@ -49,7 +49,7 @@ const ScholarshipDetails = () => {
                         </div>
                         <div className="mb-4 w-full px-2">
                             <Link to={ {
-                                pathname: `/scholarships/${scholarship._id}/payment`,
+                                pathname: `/payment/${scholarship._id}`,
                                 search: `?universityName=${encodeURIComponent(scholarship.university_name)}&scholarshipCategory=${encodeURIComponent(scholarship.scholarship_category)}&subjectCategory=${encodeURIComponent(scholarship.subject_name)}&applicationFees=${encodeURIComponent(scholarship.application_fees)}&serviceCharge=${encodeURIComponent(scholarship.service_charge)}`,
                                 state: {
                                     universityName: scholarship.university_name,
