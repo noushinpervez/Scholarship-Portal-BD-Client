@@ -12,18 +12,13 @@ import ScholarshipFormInput from "../../../components/ScholarshipFormInput";
 const MyApplication = () => {
     const axiosPublic = useAxiosPublic();
     const { user } = useAuth();
-    const [detailModalOpen, setDetailModalOpen] = useState(false);
     const [selectedApplicationDetails, setSelectedApplicationDetails] = useState(null);
-    const [editModalOpen, setEditModalOpen] = useState(false);
     const [editApplicationDetails, setEditApplicationDetails] = useState({
-        universityName: "",
-        scholarshipCategory: "",
-        subjectCategory: "",
-        applyingDegree: "",
-        applicationFees: "",
-        serviceCharge: "",
-        applicationStatus: "",
+        phoneNumber: "",
+        address: "",
+        photo: "",
     });
+    const [modalType, setModalType] = useState(null);
 
     const { data: scholarshipApplications = [], refetch } = useQuery({
         queryKey: ["scholarshipApplications", user.email],
@@ -62,29 +57,22 @@ const MyApplication = () => {
 
     const handleViewDetails = (application) => {
         setSelectedApplicationDetails(application);
-        setDetailModalOpen(true);
+        setModalType("detail");
     };
 
-    const handleCloseDetailModal = () => {
+    const handleCloseModal = () => {
         setSelectedApplicationDetails(null);
-        setDetailModalOpen(false);
+        setModalType(null);
     };
 
     const handleEditApplication = (application) => {
+        setSelectedApplicationDetails(application);
         setEditApplicationDetails({
-            universityName: application.universityName,
-            scholarshipCategory: application.scholarshipCategory,
-            subjectCategory: application.subjectCategory,
-            applyingDegree: application.applyingDegree,
-            applicationFees: application.applicationFees,
-            serviceCharge: application.serviceCharge,
-            applicationStatus: application.applicationStatus,
+            phoneNumber: application.phoneNumber,
+            address: application.address,
+            photo: application.photo,
         });
-        setEditModalOpen(true);
-    };
-
-    const handleCloseEditModal = () => {
-        setEditModalOpen(false);
+        setModalType("edit");
     };
 
     const handleEditFormSubmit = async (event) => {
@@ -102,7 +90,7 @@ const MyApplication = () => {
                 confirmButtonColor: "var(--primary-500)",
             });
 
-            handleCloseEditModal();
+            handleCloseModal();
             refetch();
         } catch (error) {
             await Swal.fire({
@@ -130,7 +118,9 @@ const MyApplication = () => {
                 </div>
                 { scholarshipApplications.length === 0 ? (
                     <div className="p-4">
-                        <div className="text-red-400 text-2xl font-semibold flex items-center justify-center mt-16">No applications found.</div>
+                        <div className="text-red-400 text-2xl font-semibold flex items-center justify-center mt-16">
+                            No applications found.
+                        </div>
                     </div>
                 ) : (
                     <div className="px-3 py-4 flex overflow-scroll">
@@ -168,7 +158,7 @@ const MyApplication = () => {
                                             </button>
                                             <button
                                                 type="button"
-                                                onClick={ () => handleEditApplication() }
+                                                onClick={ () => handleEditApplication(application) }
                                                 className="text-sm bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline mr-2"
                                             >
                                                 <MdOutlineEdit className="lg:w-5 lg:h-5 w-4 h-4" />
@@ -196,7 +186,7 @@ const MyApplication = () => {
             </div>
 
             {/* Scholarship Detail Modal */ }
-            { detailModalOpen && selectedApplicationDetails && (
+            { modalType === "detail" && selectedApplicationDetails && (
                 <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 flex items-center justify-center p-4">
                     <div className="bg-background-50 w-full max-w-3xl p-6 rounded-lg">
                         <h2 className="text-xl font-semibold mb-4">Scholarship Application Details</h2>
@@ -231,7 +221,7 @@ const MyApplication = () => {
                         <div className="flex justify-end">
                             <button
                                 type="button"
-                                onClick={ handleCloseDetailModal }
+                                onClick={ handleCloseModal }
                                 className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
                             >
                                 Close
@@ -242,77 +232,45 @@ const MyApplication = () => {
             ) }
 
             {/* Edit Application Modal */ }
-            { editModalOpen && selectedApplicationDetails && (
+            { modalType === "edit" && selectedApplicationDetails && (
                 <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 flex items-center justify-center p-4">
                     <div className="bg-background-50 w-full max-w-md p-6 rounded-lg">
                         <h2 className="text-xl font-semibold mb-4">Edit Application</h2>
                         <form onSubmit={ handleEditFormSubmit }>
                             <ScholarshipFormInput
-                                label="University Name"
-                                value={ editApplicationDetails.universityName }
+                                label="Applicant Phone Number"
+                                value={ editApplicationDetails.phoneNumber }
                                 onChange={ (e) =>
-                                    setEditApplicationDetails({ ...editApplicationDetails, universityName: e.target.value })
+                                    setEditApplicationDetails({ ...editApplicationDetails, phoneNumber: e.target.value })
                                 }
-                                name="universityName"
+                                name="phoneNumber"
                                 required
                             />
 
                             <ScholarshipFormInput
-                                label="Scholarship Category"
-                                value={ editApplicationDetails.scholarshipCategory }
+                                label="Applicant Address"
+                                value={ editApplicationDetails.address }
                                 onChange={ (e) =>
-                                    setEditApplicationDetails({ ...editApplicationDetails, scholarshipCategory: e.target.value })
+                                    setEditApplicationDetails({ ...editApplicationDetails, address: e.target.value })
                                 }
-                                name="scholarshipCategory"
+                                name="address"
                                 required
                             />
 
                             <ScholarshipFormInput
-                                label="Subject Category"
-                                value={ editApplicationDetails.subjectCategory }
+                                label="Applicant Photo URL"
+                                value={ editApplicationDetails.photo }
                                 onChange={ (e) =>
-                                    setEditApplicationDetails({ ...editApplicationDetails, subjectCategory: e.target.value })
+                                    setEditApplicationDetails({ ...editApplicationDetails, photo: e.target.value })
                                 }
-                                name="subjectCategory"
-                                required
-                            />
-
-                            <ScholarshipFormInput
-                                label="Applied Degree"
-                                value={ editApplicationDetails.applyingDegree }
-                                onChange={ (e) =>
-                                    setEditApplicationDetails({ ...editApplicationDetails, applyingDegree: e.target.value })
-                                }
-                                name="applyingDegree"
-                                required
-                            />
-
-                            <ScholarshipFormInput
-                                label="Application Fees"
-                                value={ editApplicationDetails.applicationFees }
-                                onChange={ (e) =>
-                                    setEditApplicationDetails({ ...editApplicationDetails, applicationFees: e.target.value })
-                                }
-                                name="applicationFees"
-                                type="number"
-                                required
-                            />
-
-                            <ScholarshipFormInput
-                                label="Service Charge"
-                                value={ editApplicationDetails.serviceCharge }
-                                onChange={ (e) =>
-                                    setEditApplicationDetails({ ...editApplicationDetails, serviceCharge: e.target.value })
-                                }
-                                name="serviceCharge"
-                                type="number"
+                                name="photo"
                                 required
                             />
 
                             <div className="flex justify-end">
                                 <button
                                     type="button"
-                                    onClick={ handleCloseEditModal }
+                                    onClick={ handleCloseModal }
                                     className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 mr-2"
                                 >
                                     Cancel
