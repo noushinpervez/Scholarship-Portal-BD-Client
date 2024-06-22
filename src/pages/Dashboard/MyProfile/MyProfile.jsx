@@ -1,9 +1,11 @@
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../../hooks/useAuth";
 import Title from "../../../components/Title";
+import useUserRole from "../../../hooks/useUserRole";
 
 const MyProfile = () => {
     const { user } = useAuth();
+    const { role } = useUserRole(user.email);
 
     return (
         <>
@@ -16,8 +18,8 @@ const MyProfile = () => {
             <div className="flex justify-center items-center h-full">
                 <div className="w-full overflow-hidden max-w-screen-md m-auto rounded border border-background-100">
                     <div className="px-4 py-5 sm:px-6">
-                        <h3 className="text-lg leading-6 font-medium">User Profile</h3>
-                        <p className="mt-1 max-w-2xl text-sm text-gray-500">Information about the user</p>
+                        <h3 className="text-lg leading-6 font-medium"><span className="capitalize">{ role }</span> Profile</h3>
+                        <p className="mt-1 max-w-2xl text-sm text-gray-500">Information about the <span className="capitalize">{ role }</span></p>
                     </div>
 
                     {/* User Information */ }
@@ -40,6 +42,13 @@ const MyProfile = () => {
                                 <p className="text-sm font-medium text-gray-500">Email address</p>
                                 <p className="mt-1 text-sm sm:mt-0 sm:col-span-2">{ user?.email }</p>
                             </div>
+
+                            {
+                                (role === "admin" || role === "moderator") ? <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                    <p className="text-sm font-medium text-gray-500">Role</p>
+                                    <p className="mt-1 text-sm sm:mt-0 sm:col-span-2 capitalize">{ role }</p>
+                                </div> : <></>
+                            }
                         </div>
                     </div>
                 </div>

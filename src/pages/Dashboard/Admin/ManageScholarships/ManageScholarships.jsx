@@ -7,10 +7,19 @@ import { CgDetailsMore } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { useState } from "react";
+import ScholarshipFormInput from "../../../../components/ScholarshipFormInput";
+import ScholarshipFormOptionInput from "../../../../components/ScholarshipFormOptionInput";
 
 const ManageScholarships = () => {
     const [scholarships, loading, error, refetch] = useScholarshipData();
     const axiosPublic = useAxiosPublic();
+    const [editModalOpen, setEditModalOpen] = useState(false);
+    const [editedScholarship, setEditedScholarship] = useState(null);
+
+    const subjectCategories = ["Agriculture", "Engineering", "Doctor"];
+    const scholarshipCategories = ["Full Funding", "Partial Funding", "Self-funded"];
+    const degrees = ["Diploma", "Bachelor", "Masters"];
 
     if (loading) {
         return <Loading></Loading>;
@@ -19,6 +28,44 @@ const ManageScholarships = () => {
     if (error) {
         return <div className="text-red-400 text-2xl font-semibold min-h-screen flex items-center justify-center">Error: { error }</div>;
     }
+
+    const openEditModal = (scholarship) => {
+        setEditedScholarship(scholarship);
+        setEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setEditModalOpen(false);
+        setEditedScholarship(null);
+    };
+
+    const handleUpdateScholarship = async () => {
+        try {
+            const response = await axiosPublic.put(`/update-scholarships/${editedScholarship._id}`, editedScholarship);
+            if (response.status === 200) {
+                await Swal.fire({
+                    title: "Updated!",
+                    text: "Scholarship has been updated successfully.",
+                    icon: "success",
+                    background: "var(--accent-100)",
+                    color: "var(--text-primary)",
+                });
+                refetch();
+                closeEditModal();
+            } else {
+                throw new Error("Failed to update scholarship");
+            }
+        } catch (error) {
+            console.error("Error updating scholarship:", error);
+            await Swal.fire({
+                title: "Error",
+                text: "Failed to update scholarship",
+                icon: "error",
+                background: "var(--accent-100)",
+                color: "var(--text-primary)",
+            });
+        }
+    };
 
     // Cancel scholarship
     const handleCancelScholarship = async (scholarshipId) => {
@@ -87,7 +134,8 @@ const ManageScholarships = () => {
                                         </Link>
 
                                         <button
-                                            type="button"
+                                            type="button" 
+                                            onClick={ () => openEditModal(scholarship) } 
                                             className="text-sm bg-primary-500 hover:bg-primary-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline mr-1"
                                         >
                                             <MdOutlineEdit className="lg:w-5 lg:h-5 w-4 h-4" />
@@ -106,6 +154,128 @@ const ManageScholarships = () => {
                     </tbody>
                 </table>
             </div>
+            {/* Edit Scholarship Modal */ }
+            { editModalOpen && (
+                <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-background-50 w-full max-w-md p-6 rounded-lg">
+                        <h2 className="text-xl font-semibold mb-4">Edit Scholarship</h2>
+
+                        <ScholarshipFormInput
+                            label="University Name"
+                            value={ editedScholarship.university_name }
+                            onChange={ (e) =>
+                                setEditedScholarship({
+                                    ...editedScholarship,
+                                    university_name: e.target.value,
+                                })
+                            }
+                        />
+                        <ScholarshipFormInput
+                            label="University Location - Country"
+                            value={ editedScholarship?.university_location?.country || "" }
+                            onChange={ (e) =>
+                                setEditedScholarship({
+                                    ...editedScholarship,
+                                    university_location: {
+                                        ...editedScholarship.university_location,
+                                        country: e.target.value,
+                                    },
+                                })
+                            }
+                        />
+                        <ScholarshipFormOptionInput
+                            label="Scholarship Category"
+                            value={ editedScholarship.scholarship_category }
+                            options={ scholarshipCategories }
+                            onChange={ (e) =>
+                                setEditedScholarship({
+                                    ...editedScholarship,
+                                    scholarship_category: e.target.value,
+                                })
+                            }
+                        />
+                        <ScholarshipFormInput
+                            label="Application Deadline"
+                            value={ editedScholarship.application_deadline }
+                            onChange={ (e) =>
+                                setEditedScholarship({
+                                    ...editedScholarship,
+                                    application_deadline: e.target.value,
+                                })
+                            }
+                        />
+                        <ScholarshipFormOptionInput
+                            label="Subject Category"
+                            value={ editedScholarship.subject_name }
+                            options={ subjectCategories }
+                            onChange={ (e) =>
+                                setEditedScholarship({
+                                    ...editedScholarship,
+                                    subject_name: e.target.value,
+                                })
+                            }
+                        />
+                        <ScholarshipFormInput
+                            label="Stipend"
+                            value={ editedScholarship.stipend }
+                            onChange={ (e) =>
+                                setEditedScholarship({
+                                    ...editedScholarship,
+                                    stipend: e.target.value,
+                                })
+                            }
+                        />
+                        <ScholarshipFormInput
+                            label="Service Charge"
+                            value={ editedScholarship.service_charge }
+                            onChange={ (e) =>
+                                setEditedScholarship({
+                                    ...editedScholarship,
+                                    service_charge: e.target.value,
+                                })
+                            }
+                        />
+                        <ScholarshipFormInput
+                            label="Application Fees"
+                            value={ editedScholarship.application_fees }
+                            onChange={ (e) =>
+                                setEditedScholarship({
+                                    ...editedScholarship,
+                                    application_fees: e.target.value,
+                                })
+                            }
+                        />
+                        <ScholarshipFormOptionInput
+                            label="Degree"
+                            value={ editedScholarship.degree_name }
+                            options={ degrees }
+                            onChange={ (e) =>
+                                setEditedScholarship({
+                                    ...editedScholarship,
+                                    degree_name: e.target.value,
+                                })
+                            }
+                        />
+
+                        <div className="flex justify-end">
+                            <button
+                                type="button"
+                                className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded mr-2"
+                                onClick={ handleUpdateScholarship }
+                            >
+                                Save Changes
+                            </button>
+                            <button
+                                type="button"
+                                className="bg-gray-300 hover:bg-gray-400 text-gray-900 px-4 py-2 rounded"
+                                onClick={ closeEditModal }
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            ) }
         </>
     );
 };

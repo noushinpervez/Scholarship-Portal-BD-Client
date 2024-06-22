@@ -63,6 +63,7 @@ const ManageUsers = () => {
             text: `${userName}'s role has been updated to ${newRole}.`,
             icon: "success",
             background: "var(--accent-100)",
+            color: "var(--text-primary)",
         });
         refetch();
     };
