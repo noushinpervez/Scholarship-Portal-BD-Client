@@ -35,8 +35,6 @@ const ScholarshipDetails = () => {
         return <div className="text-red-400 text-2xl font-semibold min-h-[49vh] flex items-center justify-center">Error: { error }</div>;
     }
 
-    console.log(scholarship.application_fees+scholarship.service_charge);
-
     return (
         <>
             <Helmet>
@@ -52,8 +50,11 @@ const ScholarshipDetails = () => {
                         <div className="mb-4 w-full px-2">
                             <Link to={ {
                                 pathname: `/scholarships/${scholarship._id}/payment`,
-                                search: `?applicationFees=${encodeURIComponent(scholarship.application_fees)}&serviceCharge=${encodeURIComponent(scholarship.service_charge)}`,
+                                search: `?universityName=${encodeURIComponent(scholarship.university_name)}&scholarshipCategory=${encodeURIComponent(scholarship.scholarship_category)}&subjectCategory=${encodeURIComponent(scholarship.subject_name)}&applicationFees=${encodeURIComponent(scholarship.application_fees)}&serviceCharge=${encodeURIComponent(scholarship.service_charge)}`,
                                 state: {
+                                    universityName: scholarship.university_name,
+                                    scholarshipCategory: scholarship.scholarship_category,
+                                    subjectCategory: scholarship.subject_name,
                                     applicationFees: scholarship.application_fees,
                                     serviceCharge: scholarship.service_charge
                                 }

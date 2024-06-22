@@ -1,122 +1,151 @@
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import PrimaryButton from "../../components/PrimaryButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import ScholarshipFormInput from "../../components/ScholarshipFormInput";
+import ScholarshipFormOptionInput from "../../components/ScholarshipFormOptionInput";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 
-const CheckOutForm = ({ totalAmount }) => {
-    const [error, setError] = useState("");
-    const [clientSecret, setClientSecret] = useState("");
-    const [transactionId, setTransactionId] = useState("");
-    const [paymentSuccess, setPaymentSuccess] = useState(false);
-    const stripe = useStripe();
-    const elements = useElements();
-    const axiosPublic = useAxiosPublic();
-    const { user } = useAuth();
-
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        background: "var(--accent-100)",
-        iconColor: "var(--primary-500)",
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
+const ScholarshipForm = ({ universityName, scholarshipCategory, subjectCategory }) => {
+    const [formData, setFormData] = useState({
+        phoneNumber: "",
+        photo: "",
+        address: "",
+        gender: "",
+        applyingDegree: "",
+        sscResult: "",
+        hscResult: "",
+        studyGap: ""
     });
 
-    useEffect(() => {
-        axiosPublic.post("/create-payment-intent", { fees: totalAmount })
-            .then(res => {
-                console.log(res.data.clientSecret);
-                setClientSecret(res.data.clientSecret);
-            })
-    }, [axiosPublic, totalAmount]);
+    const axiosPublic = useAxiosPublic();
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: value
+        }));
+    };
 
-        if (!stripe || !elements) {
-            return;
-        }
-
-        const card = elements.getElement(CardElement);
-
-        if (card === null) {
-            return;
-        }
-
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
-            type: "card",
-            card,
-        });
-
-        if (error) {
-            setError(error.message);
-        }
-        else {
-            setError("");
-        }
-
-        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: card,
-                billing_details: {
-                    email: user?.email || "anonymous",
-                    name: user?.displayName || "anonymous",
-                },
-            },
-        });
-
-        if (confirmError) {
-            setError(confirmError.message);
-            Toast.fire({
-                icon: "error",
-                title: confirmError.message,
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axiosPublic.post("/applied-scholarships", formData);
+            console.log(response.data);
+            setFormData({
+                phoneNumber: "",
+                photo: "",
+                address: "",
+                gender: "",
+                applyingDegree: "",
+                sscResult: "",
+                hscResult: "",
+                studyGap: ""
             });
-        }
-        else {
-            if (paymentIntent.status === "succeeded") {
-                setTransactionId(paymentIntent.id);
-                setPaymentSuccess(true);
 
-                Toast.fire({
-                    icon: "success",
-                    title: "Payment successful"
-                });
-            }
+            Swal.fire({
+                title: "Applied for Scholarship!",
+                text: "Your scholarship application has been submitted successfully.",
+                icon: "success",
+                background: "var(--accent-100)",
+                color: "var(--text-primary)",
+            });
+        } catch (error) {
+            Swal.fire({
+                title: "Error!",
+                text: "There was an error while submitting your application. Please try again later.",
+                icon: "error",
+                confirmButtonColor: "#d33",
+                background: "var(--accent-100)",
+            });
         }
     };
 
     return (
         <form onSubmit={ handleSubmit }>
-            <CardElement
-                options={ {
-                    style: {
-                        base: {
-                            fontSize: "16px",
-                            color: "#424770",
-                            "::placeholder": {
-                                color: "#aab7c4",
-                            },
-                        },
-                        invalid: {
-                            color: "#9e2146",
-                        },
-                    },
-                } }
+            <ScholarshipFormInput
+                label="Applicant Phone Number"
+                name="phoneNumber"
+                value={ formData.phoneNumber }
+                onChange={ handleChange }
+                required
             />
-            <PrimaryButton type="submit" disabled={ !stripe || !clientSecret } className="w-20 mt-4">Pay</PrimaryButton>
-
-            <p className="mt-1 text-sm text-red-500 italic">{ error }</p>
-
-            { transactionId && <p className="mt-2 text-green-400 italic">Payment Succeeded</p> }
+            <ScholarshipFormInput
+                label="Applicant Photo URL"
+                name="photo"
+                value={ formData.photo }
+                onChange={ handleChange }
+                required
+            />
+            <ScholarshipFormInput
+                label="Applicant Address"
+                name="address"
+                value={ formData.address }
+                onChange={ handleChange }
+                required
+            />
+            <ScholarshipFormOptionInput
+                label="Gender"
+                name="gender"
+                value={ formData.gender }
+                options={ ["Male", "Female", "Other"] }
+                onChange={ handleChange }
+                required
+            />
+            <ScholarshipFormOptionInput
+                label="Applying Degree"
+                name="applyingDegree"
+                value={ formData.applyingDegree }
+                options={ ["Diploma", "Bachelor", "Masters"] }
+                onChange={ handleChange }
+                required
+            />
+            <ScholarshipFormInput
+                label="SSC Result"
+                name="sscResult"
+                value={ formData.sscResult }
+                onChange={ handleChange }
+                required
+            />
+            <ScholarshipFormInput
+                label="HSC Result"
+                name="hscResult"
+                value={ formData.hscResult }
+                onChange={ handleChange }
+                required
+            />
+            <ScholarshipFormOptionInput
+                label="Study Gap (if any)"
+                name="studyGap"
+                value={ formData.studyGap }
+                options={ ["1 Year", "2 Years", "3 Years", "More"] }
+                onChange={ handleChange }
+            />
+            <ScholarshipFormInput
+                label="University Name"
+                name="universityName"
+                value={ universityName }
+                onChange={ handleChange }
+                readOnly
+            />
+            <ScholarshipFormInput
+                label="Scholarship Category"
+                name="scholarshipCategory"
+                value={ scholarshipCategory }
+                onChange={ handleChange }
+                readOnly
+            />
+            <ScholarshipFormInput
+                label="Subject Category"
+                name="subjectCategory"
+                value={ subjectCategory }
+                onChange={ handleChange }
+                readOnly
+            />
+            <button type="submit" className="w-full mt-4 p-2 bg-primary-500 text-white rounded">
+                Submit
+            </button>
         </form>
     );
 };
 
-export default CheckOutForm;
+export default ScholarshipForm;

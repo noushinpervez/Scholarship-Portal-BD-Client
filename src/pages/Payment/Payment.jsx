@@ -11,6 +11,9 @@ const Payment = () => {
     const searchParams = new URLSearchParams(location.search);
     const applicationFees = parseInt(searchParams.get("applicationFees")) || 0;
     const serviceCharge = parseInt(searchParams.get("serviceCharge")) || 0;
+    const universityName = searchParams.get("universityName") || "";
+    const scholarshipCategory = searchParams.get("scholarshipCategory") || "";
+    const subjectCategory = searchParams.get("subjectCategory") || "";
 
     const totalAmount = (applicationFees + serviceCharge);
 
@@ -23,10 +26,18 @@ const Payment = () => {
             <div className="container my-16 mx-auto px-2 md:px-4">
                 <h2 className="text-center mb-12 px-6 text-3xl font-bold text-accent-600">Payment</h2>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <p className="text-center mb-6 text-lg text-gray-700">
+                    You are confirming your application for <strong>{ universityName }</strong> in the category of <strong>{ scholarshipCategory }</strong> with a focus on <strong>{ subjectCategory }</strong>.
+                </p>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
                     <div className="lg:col-span-2">
                         <Elements stripe={ stripePromise }>
-                        <CheckOutForm totalAmount={ totalAmount } />
+                            <CheckOutForm totalAmount={ totalAmount }
+                                universityName={ universityName }
+                                scholarshipCategory={ scholarshipCategory }
+                                subjectCategory={ subjectCategory }
+                            />
                         </Elements>
                     </div>
 
@@ -36,7 +47,7 @@ const Payment = () => {
                         <ul className="mt-8 space-y-4">
                             <li className="flex flex-wrap gap-4 text-sm">Application Fees<span className="ml-auto font-bold">$ { applicationFees }</span></li>
                             <li className="flex flex-wrap gap-4 text-sm">Service Charge <span className="ml-auto font-bold">$ { serviceCharge }</span></li>
-                            <li className="flex flex-wrap gap-4 text-sm font-bold border-t-2 pt-4">Total <span className="ml-auto">$ { totalAmount}</span></li>
+                            <li className="flex flex-wrap gap-4 text-sm font-bold border-t-2 pt-4">Total <span className="ml-auto">$ { totalAmount }</span></li>
                         </ul>
                     </div>
                 </div>
