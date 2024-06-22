@@ -63,6 +63,7 @@ const ManageScholarships = () => {
                 icon: "error",
                 background: "var(--accent-100)",
                 color: "var(--text-primary)",
+                confirmButtonColor: "var(--primary-500)",
             });
         }
     };
@@ -74,7 +75,7 @@ const ManageScholarships = () => {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
+            confirmButtonColor: "var(--primary-500)",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, cancel scholarship!",
             background: "var(--accent-100)",
@@ -156,10 +157,9 @@ const ManageScholarships = () => {
             </div>
             {/* Edit Scholarship Modal */ }
             { editModalOpen && (
-                <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 flex items-center justify-center">
+                <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 lg:flex items-center justify-center">
                     <div className="bg-background-50 w-full max-w-md p-6 rounded-lg">
                         <h2 className="text-xl font-semibold mb-4">Edit Scholarship</h2>
-
                         <ScholarshipFormInput
                             label="University Name"
                             value={ editedScholarship.university_name }
@@ -196,6 +196,7 @@ const ManageScholarships = () => {
                         />
                         <ScholarshipFormInput
                             label="Application Deadline"
+                            type="date"
                             value={ editedScholarship.application_deadline }
                             onChange={ (e) =>
                                 setEditedScholarship({
@@ -218,6 +219,7 @@ const ManageScholarships = () => {
                         <ScholarshipFormInput
                             label="Stipend"
                             value={ editedScholarship.stipend }
+                            type="number"
                             onChange={ (e) =>
                                 setEditedScholarship({
                                     ...editedScholarship,
@@ -228,6 +230,7 @@ const ManageScholarships = () => {
                         <ScholarshipFormInput
                             label="Service Charge"
                             value={ editedScholarship.service_charge }
+                            type="number"
                             onChange={ (e) =>
                                 setEditedScholarship({
                                     ...editedScholarship,
@@ -238,6 +241,7 @@ const ManageScholarships = () => {
                         <ScholarshipFormInput
                             label="Application Fees"
                             value={ editedScholarship.application_fees }
+                            type="number"
                             onChange={ (e) =>
                                 setEditedScholarship({
                                     ...editedScholarship,

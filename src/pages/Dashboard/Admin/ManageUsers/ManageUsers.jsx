@@ -45,7 +45,7 @@ const ManageUsers = () => {
                 text: `Are you sure you want to assign the Admin role to ${userName}?`,
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#3085d6",
+                confirmButtonColor: "var(--primary-500)",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Yes, assign Admin!",
                 background: "var(--accent-100)",
@@ -64,6 +64,7 @@ const ManageUsers = () => {
             icon: "success",
             background: "var(--accent-100)",
             color: "var(--text-primary)",
+            confirmButtonColor: "var(--primary-500)",
         });
         refetch();
     };
@@ -75,7 +76,7 @@ const ManageUsers = () => {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
+            confirmButtonColor: "var(--primary-500)",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete user!",
             background: "var(--accent-100)",
@@ -90,6 +91,7 @@ const ManageUsers = () => {
                 icon: "success",
                 background: "var(--accent-100)",
                 color: "var(--text-primary)",
+                confirmButtonColor: "var(--primary-500)",
             });
             refetch();
         }
