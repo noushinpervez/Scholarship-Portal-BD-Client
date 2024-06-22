@@ -6,6 +6,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import { Navigate, useParams } from "react-router-dom";
+import PrimaryButton from "../../components/PrimaryButton";
 
 const ScholarshipForm = ({ universityName, scholarshipCategory, subjectCategory, applicationFees, serviceCharge }) => {
     const [formData, setFormData] = useState({
@@ -77,6 +78,7 @@ const ScholarshipForm = ({ universityName, scholarshipCategory, subjectCategory,
                 scholarshipId: id,
                 applicationDate: todayDate,
                 applicationStatus: "pending",
+                feedback: "No feedbacks yet",
             };
 
             setIsSubmitted(true);
@@ -112,7 +114,7 @@ const ScholarshipForm = ({ universityName, scholarshipCategory, subjectCategory,
     }
 
     return (
-        <form onSubmit={ handleSubmit }>
+        <form onSubmit={ handleSubmit } className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
             <ScholarshipFormInput
                 label="Applicant Phone Number"
                 name="phoneNumber"
@@ -192,9 +194,10 @@ const ScholarshipForm = ({ universityName, scholarshipCategory, subjectCategory,
                 onChange={ handleChange }
                 readOnly
             />
-            <button type="submit" className="w-full mt-4 p-2 bg-primary-500 text-white rounded">
+            <div></div>
+            <PrimaryButton type="submit" className="mt-2">
                 Submit
-            </button>
+            </PrimaryButton>
         </form>
     );
 };

@@ -137,7 +137,7 @@ const AddScholarship = () => {
                 loading && <Loading />
             }
 
-            <form onSubmit={ handleSubmit } className="grid grid-cols-1 md:grid-cols-2 gap-4 px-3 py-4">
+            <form onSubmit={ handleSubmit } className="grid grid-cols-1 md:grid-cols-2 gap-x-6 px-3 py-4">
                 <ScholarshipFormInput
                     label="Scholarship Name"
                     value={ formData.scholarshipName }
@@ -158,7 +158,7 @@ const AddScholarship = () => {
                         type="file"
                         accept="image/*"
                         onChange={ handleImageUpload }
-                        className="mt-1 block w-full border border-gray-500 rounded shadow focus:border-primary-500 focus:ring focus:ring-primary-500 p-1 px-2 bg-accent-100 text-sm"
+                        className="mt-1 block w-full border border-gray-500 rounded shadow focus:border-primary-500 focus:ring focus:ring-primary-500 p-1.5 bg-accent-100 text-sm"
                         required
                     />
                 </div>

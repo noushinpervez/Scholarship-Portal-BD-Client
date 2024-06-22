@@ -160,7 +160,7 @@ const ManageUsers = () => {
                                     key={ user._id }
                                     className="border-b hover:bg-primary-100 bg-background-50 border-accent-100"
                                 >
-                                    <th>{ index + 1 }</th>
+                                    <th className="p-2">{ index + 1 }</th>
                                     <td className="p-3 px-5">{ user.name }</td>
                                     <td className="p-3 px-5">{ user.email }</td>
                                     <td className="p-3 px-5">

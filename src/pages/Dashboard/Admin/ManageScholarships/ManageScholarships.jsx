@@ -103,6 +103,10 @@ const ManageScholarships = () => {
 
             <Title title="Manage Scholarships" />
 
+            <div className="p-4 flex">
+                <h1 className="text-2xl">Total Scholarships: { scholarships.length }</h1>
+            </div>
+
             <div className="px-3 py-4 flex overflow-scroll">
                 <table className="w-full bg-accent-100 shadow rounded mb-4 text-xs lg:text-sm">
                     <tbody>
@@ -129,7 +133,7 @@ const ManageScholarships = () => {
                                     <td className="p-3 px-5">{ scholarship.application_fees }</td>
                                     <td className="p-3 px-5 flex justify-end">
                                         <Link to={ `/scholarships/${scholarship._id}` }
-                                            className="text-sm bg-accent-500 hover:bg-accent-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline mr-1"
+                                            className="text-sm bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline mr-2"
                                         >
                                             <CgDetailsMore className="lg:w-5 lg:h-5 w-4 h-4" />
                                         </Link>
@@ -137,7 +141,7 @@ const ManageScholarships = () => {
                                         <button
                                             type="button" 
                                             onClick={ () => openEditModal(scholarship) } 
-                                            className="text-sm bg-primary-500 hover:bg-primary-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline mr-1"
+                                            className="text-sm bg-yellow-500 hover:bg-yellow-700 text-white py-1 px-2 rounded focus:outline-none focus:shadow-outline mr-2"
                                         >
                                             <MdOutlineEdit className="lg:w-5 lg:h-5 w-4 h-4" />
                                         </button>
@@ -157,7 +161,7 @@ const ManageScholarships = () => {
             </div>
             {/* Edit Scholarship Modal */ }
             { editModalOpen && (
-                <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 lg:flex items-center justify-center">
+                <div className="fixed inset-0 z-50 overflow-auto bg-gray-900 bg-opacity-50 lg:flex items-center justify-center p-4">
                     <div className="bg-background-50 w-full max-w-md p-6 rounded-lg">
                         <h2 className="text-xl font-semibold mb-4">Edit Scholarship</h2>
                         <ScholarshipFormInput

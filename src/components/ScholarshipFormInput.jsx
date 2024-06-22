@@ -10,7 +10,7 @@ const ScholarshipFormInput = ({ label, value, onChange, name, type = "text", req
                 onChange={ onChange }
                 name={ name }
                 required={ required }
-                className="mt-1 block w-full border border-gray-500 rounded shadow focus:border-primary-500 focus:ring focus:ring-primary-500 p-1 px-2 bg-accent-100 text-sm"
+                className="mt-1 block w-full border border-gray-500 rounded shadow focus:border-primary-500 focus:ring focus:ring-primary-500 p-2 bg-accent-100 text-sm"
             />
         </div>
     );
