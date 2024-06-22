@@ -6,7 +6,7 @@
 - **Admin Full Name:** Scholarship Portal
 - **Admin Email:** portal@gmail.com
 - **Admin Password:** 1234A@
-- **Live Site URL:** [https://scholarship-portal-bd.web.app/](https://scholarship-portal-bd.web.app/)
+- **Live Site URL:** [https://scholarship-portal-bd.web.app/](https://scholarship-portal-bd.netlify.app/)
 
 ## Features
 
