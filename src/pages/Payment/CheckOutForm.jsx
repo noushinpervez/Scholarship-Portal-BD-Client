@@ -3,15 +3,31 @@ import PrimaryButton from "../../components/PrimaryButton";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const CheckOutForm = ({ totalAmount }) => {
     const [error, setError] = useState("");
     const [clientSecret, setClientSecret] = useState("");
     const [transactionId, setTransactionId] = useState("");
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
     const stripe = useStripe();
     const elements = useElements();
     const axiosPublic = useAxiosPublic();
     const { user } = useAuth();
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        background: "var(--accent-100)",
+        iconColor: "var(--primary-500)",
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
 
     useEffect(() => {
         axiosPublic.post("/create-payment-intent", { fees: totalAmount })
@@ -54,20 +70,24 @@ const CheckOutForm = ({ totalAmount }) => {
                     name: user?.displayName || "anonymous",
                 },
             },
-        })
+        });
 
         if (confirmError) {
             setError(confirmError.message);
+            Toast.fire({
+                icon: "error",
+                title: confirmError.message,
+            });
         }
         else {
             if (paymentIntent.status === "succeeded") {
                 setTransactionId(paymentIntent.id);
+                setPaymentSuccess(true);
 
-                const payment = {
-                    email: user.email,
-                    fees: totalAmount,
-                    date: new Date(),
-                }
+                Toast.fire({
+                    icon: "success",
+                    title: "Payment successful"
+                });
             }
         }
     };
@@ -90,7 +110,7 @@ const CheckOutForm = ({ totalAmount }) => {
                     },
                 } }
             />
-            <PrimaryButton type="submit" disabled={ !stripe || !clientSecret } className="w-32 mt-4">Pay</PrimaryButton>
+            <PrimaryButton type="submit" disabled={ !stripe || !clientSecret } className="w-20 mt-4">Pay</PrimaryButton>
 
             <p className="mt-1 text-sm text-red-500 italic">{ error }</p>
 

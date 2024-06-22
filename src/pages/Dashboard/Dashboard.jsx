@@ -43,7 +43,7 @@ const Dashboard = () => {
         // Default role (user)
         navigationLinks = [
             { to: "/dashboard/profile", label: "My Profile" },
-            { to: "/dashboard/manage-applications", label: "My Application" },
+            { to: "/dashboard/manage-applied-applications", label: "My Application" },
             { to: "/dashboard/manage-reviews", label: "My Reviews" },
         ];
     }

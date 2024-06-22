@@ -71,6 +71,10 @@ export const router = createBrowserRouter([
                 path: "manage-applied-applications",
                 element: <ManageApplications />,
             },
+            {
+                path: "manage-reviews",
+                element: <ManageReviews />,
+            },
 
             // Admin routes 
             {
@@ -83,12 +87,6 @@ export const router = createBrowserRouter([
                 path: "manage-users",
                 element: <PrivateRoute allowedRoles={ ["admin"] }>
                     <ManageUsers />
-                </PrivateRoute>,
-            },
-            {
-                path: "manage-reviews",
-                element: <PrivateRoute allowedRoles={ ["admin"] }>
-                    <ManageReviews />
                 </PrivateRoute>,
             },
 
