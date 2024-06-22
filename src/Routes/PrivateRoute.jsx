@@ -2,32 +2,19 @@ import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Loading from "../components/Loading";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import useAxiosPublic from "../hooks/useAxiosPublic";
+import useUserRole from "../hooks/useUserRole";
 
 const PrivateRoute = ({ children, allowedRoles }) => {
-    const { user, loading } = useAuth();
+    const { user, loading: authLoading } = useAuth();
     const location = useLocation();
-    const axiosPublic = useAxiosPublic();
-    const [role, setRole] = useState("");
-    
-    useEffect(() => {
-        const fetchUserRole = async () => {
-            try {
-                const response = await axiosPublic.get(`/user-role/${user.email}`);
-                setRole(response.data.role);
-            } catch (error) {
-                console.error("Error fetching user role:", error);
-            }
-        };
+    const { role, loading: roleLoading } = useUserRole(user?.email);
 
-        if (user) {
-            fetchUserRole();
-        }
-    }, [user, axiosPublic]);
+    if (authLoading) {
+        return <Loading />;
+    }
 
-    if (loading) {
-        return <Loading></Loading>;
+    if (roleLoading && user) {
+        return <Loading />;
     }
 
     if (!user) {

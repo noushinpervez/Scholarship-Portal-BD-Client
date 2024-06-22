@@ -1,28 +1,18 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./useAxiosPublic";
 
 const useScholarshipData = () => {
-    const [scholarships, setScholarships] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const axiosPublic = useAxiosPublic();
 
-    useEffect(() => {
-        const fetchScholarships = async () => {
-            try {
-                const response = await axiosPublic.get("/top-scholarships");
-                setScholarships(response.data);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message);
-                setLoading(false);
-            }
-        };
+    const { data: scholarships = [], isLoading, isError, refetch } = useQuery({
+        queryKey: ["topScholarships"],
+        queryFn: async () => {
+            const res = await axiosPublic.get("/top-scholarships");
+            return res.data;
+        }
+    });
 
-        fetchScholarships();
-    }, [axiosPublic]);
-    
-    return [scholarships, loading, error];
+    return [scholarships, isLoading, isError, refetch];
 };
 
 export default useScholarshipData;

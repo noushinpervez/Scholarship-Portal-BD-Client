@@ -68,7 +68,7 @@ export const router = createBrowserRouter([
                 element: <ManageReviews />,
             },
             {
-                path: "manage-applied-scholarships",
+                path: "manage-applied-applications",
                 element: <ManageApplications />,
             },
 

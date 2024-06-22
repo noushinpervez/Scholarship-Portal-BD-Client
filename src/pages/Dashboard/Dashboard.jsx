@@ -1,33 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { NavLink, Outlet } from "react-router-dom";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAuth from "../../hooks/useAuth";
 import Loading from "../../components/Loading";
+import useUserRole from "../../hooks/useUserRole";
 
 const Dashboard = () => {
     const [open, setOpen] = useState(false);
-    const axiosPublic = useAxiosPublic();
-    const [role, setRole] = useState("");
-    const [loading, setLoading] = useState(true);
     const { user } = useAuth();
-
-    useEffect(() => {
-        const fetchUserRole = async () => {
-            setLoading(true)
-            try {
-                const response = await axiosPublic.get(`/user-role/${user.email}`);
-                setRole(response.data.role);
-            } catch (error) {
-                console.error("Error fetching user role:", error);
-            }
-            setLoading(false);
-        };
-
-        if (user) {
-            fetchUserRole();
-        }
-    }, [user, axiosPublic]);
+    const { role, loading } = useUserRole(user.email);
 
     if (loading) {
         return <Loading></Loading>;
@@ -113,7 +94,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Dashboard content */ }
-                <main className="flex-grow px-4 py-5 sm:px-6">
+                <main className="flex-grow px-2 md:px-4 py-5 sm:px-6 container my-16 mx-auto">
                     <Outlet />
                 </main>
             </div>

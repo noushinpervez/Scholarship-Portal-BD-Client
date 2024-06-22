@@ -1,8 +1,15 @@
+import { Helmet } from "react-helmet-async";
+import Title from "../../../../components/Title";
+
 const AddScholarship = () => {
     return (
-        <div>
-            
-        </div>
+        <>
+            <Helmet>
+                <title>Dashboard | Add Scholarship</title>
+            </Helmet>
+
+            <Title title="Add Scholarship" />
+        </>
     );
 };
 
