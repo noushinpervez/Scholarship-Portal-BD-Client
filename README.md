@@ -1,60 +1,66 @@
 # Scholarship Portal BD
 
-**Scholarship Portal BD** is designed to help students search for suitable universities and scholarships, apply for scholarships, and manage their applications and reviews. The system includes various features for users, moderators, and admins. It also provides a comprehensive and user-friendly experience.
+## Project Overview
+**Scholarship Portal BD** is a Scholarship Management System designed to help students search for and apply to suitable universities and scholarships that best fit their needs. The users can manage their scholarship applications and reviews. The system includes features for students, moderators, and admins to ensure smooth operation and management of the scholarship process.
 
-## Admin Credentials
-- **Admin Full Name:** Scholarship Portal
-- **Admin Email:** portal@gmail.com
-- **Admin Password:** 1234A@
-- **Live Site URL:** [https://scholarship-portal-bd.web.app/](https://scholarship-portal-bd.netlify.app/)
+## Key Features
+1. **User Roles Management:** Support for different user roles (students, moderators, admins) with dedicated dashboards and role-specific permissions.
+2. **Comprehensive Scholarship Search:** Search and filter scholarships by university name, degree, and other criteria.
+3. **Secure Application Process:** Ensures secure scholarship application submissions with integrated payment gateways and application management capabilities.
 
-## Features
+## Technologies Used
+- **Frontend:** HTML, CSS, JavaScript, React
+- **Backend:** Node.js, Express.js, MongoDB
+- **Authentication:** Firebase (Email/Password, Google Login)
+- **Payment Gateway:** Stripe
+- **Hosting:** Netlify (Frontend), Vercel (Backend)
 
-1. **User Roles:** 
-   - Three types of users: Default User, Admin, and Moderator.
-   - Admin can change user roles through the admin dashboard.
+## Administrator Credentials
+- **Email:** portal@gmail.com
+- **Password:** 1234A@
 
-2. **Responsive Design:**
-   - Fully responsive for mobile, tablet, and desktop views.
+## Live Site
+[Visit Scholarship Portal BD](https://scholarship-portal-bd.netlify.app/)
 
-3. **Authentication:**
-   - Email and password-based authentication.
-   - Includes registration, login, and google login.
-   - Error handling for incorrect login and registration inputs.
+## Server Repository
+[Scholarship Portal BD Server Repository](https://github.com/noushinpervez/Scholarship-Portal-BD-Server)
 
-4. **Home Page:**
-   - Navbar with Home, All Scholarships, User Dashboard, Login/Logout options.
-   - Banner section with a carousel for advertisements.
-   - Top Scholarship section displaying six scholarships with an option to view all scholarships.
-   - Student Review section and Contact Us footer section.
+## Local Setup Instructions
+To run the project locally, follow these steps:
 
-5. **Scholarship Details:**
-   - Detailed information about each scholarship.
-   - Reviews section with a carousel for user reviews.
-   - Apply Scholarship button leading to a payment/checkout page.
-   - After payment, users can submit their application details.
+1. **Clone the repository:**
+    ```sh
+    git clone https://github.com/noushinpervez/Scholarship-Portal-BD-Client.git
+    ```
 
-6. **User Dashboard:**
-   - My Profile: Displays user information.
-   - My Applications: Shows all applied scholarships with options to view, edit, cancel, and add reviews.
-   - My Reviews: Allows users to manage their reviews.
+2. **Navigate to the project directory and install dependencies:**
+    ```sh
+    cd Scholarship-Portal-BD-Client
+    npm install
+    ```
 
-7. **Moderator Dashboard:**
-   - Manage Scholarships: View, edit, and delete scholarships.
-   - All Reviews: View and delete reviews.
-   - All Applied Scholarships: View, give feedback, and cancel applications.
-   - Add Scholarship: Add new scholarships to the system.
+3. **Set up environment variables:**
+   - Create a `.env` file in the client directory and add necessary configuration variables (Firebase config, Stripe keys, and Imgbb Image Hosting API keys):
+   
+   ```plaintext
+   VITE_API_KEY=
+   VITE_AUTH_DOMAIN=
+   VITE_PROJECT_ID=
+   VITE_STORAGE_BUCKET=
+   VITE_MESSAGING_SENDER_ID=
+   VITE_APP_ID=
+   VITE_PAYMENT_GATEWAY_KEY=
+   VITE_IMAGE_HOSTING_API=
+   ```
 
-8. **Admin Dashboard:**
-   - Manage Users: View, edit roles, and delete users.
-   - Add Scholarship: Add new scholarships.
-   - Manage Scholarships: Manage all scholarships.
-   - Manage Applications: Manage all applied applications.
-   - Manage Reviews: Manage all reviews.
+   - Replace each variable (VITE_API_KEY, VITE_AUTH_DOMAIN, etc.) with your actual configuration keys and values **without quotations**.
 
-9. **Search and Filter:**
-   - Search functionality for scholarships by name, university, and degree.
-   - Filter functionality in the admin dashboard to sort users by their roles.
+4. **Run the client:**
+    ```sh
+    npm run dev
+    ```
 
-10. **Notifications:**
-    - Sweet alert/toast notifications for CRUD operations and successful authentication.
+5. **Access the application:**
+    The application will run on `http://localhost:5173`.
+
+Follow these instructions to set up and locally run the client-side of Scholarship Portal BD to explore its features and functionalities.
